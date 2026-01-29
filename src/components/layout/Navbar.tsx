@@ -14,12 +14,8 @@ export const Navbar: React.FC = () => {
           className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
           onClick={() => (window.location.href = "/")}
         >
-          <div className="h-8 w-8 rounded-full bg-linear-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold text-xs shadow-lg">
-            W
-          </div>
           <span className="text-xl font-bold tracking-tight text-gray-900">WOMPI</span>
         </div>{" "}
-        (
         <div className="flex items-center gap-4">
           <Button
             variant="ghost"
