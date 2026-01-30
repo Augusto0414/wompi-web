@@ -17,22 +17,22 @@ Una moderna plataforma de e-commerce construida con React, TypeScript, Redux Too
 
 ### Página Principal
 
-![Página Principal](docs/images/homepage.png)
+![Página Principal](docs/images/home.png)
 _Catálogo de productos con opciones de búsqueda y navegación_
 
 ### Carrito de Compras
 
-![Carrito de Compras](docs/images/shopping-cart.png)
+![Carrito de Compras](docs/images/card.png)
 _Carrito lateral con productos añadidos y opciones de cantidad_
 
 ### Proceso de Checkout
 
-![Checkout](docs/images/checkout.png)
+![Checkout](docs/images/infoPayment.png)
 _Formulario de checkout con información de contacto, envío y resumen del pedido_
 
 ### Confirmación de Pago
 
-![Pago Exitoso](docs/images/payment-success.png)
+![Pago Exitoso](docs/images/payment.png)
 _Confirmación de pago exitoso con detalles de la transacción y opción de descarga de recibo_
 
 ## 🛠️ Tecnologías Utilizadas
@@ -71,9 +71,8 @@ _Confirmación de pago exitoso con detalles de la transacción y opción de desc
 3. **Configurar variables de entorno**
 
    ```bash
-   # Crear archivo .env.local
-   VITE_WOMPI_PUBLIC_KEY=your_wompi_public_key
-   VITE_WOMPI_PRIVATE_KEY=your_wompi_private_key
+   # Crear archivo .env
+   VITE_API_URL=https://wompi-api.onrender.com/api
    ```
 
 4. **Ejecutar en modo desarrollo**
