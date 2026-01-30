@@ -97,7 +97,11 @@ export const CartDrawer: React.FC = () => {
                     {items.map((item) => (
                       <li key={item.id} className="flex py-6">
                         <div className="h-24 w-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
-                          <img src={item.imageUrl} alt={item.name} className="h-full w-full object-cover object-center" />
+                          <img
+                            src={item.imageUrl}
+                            alt={item.name}
+                            className="h-full w-full object-cover object-center"
+                          />
                         </div>
 
                         <div className="ml-4 flex flex-1 flex-col">
