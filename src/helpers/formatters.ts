@@ -11,3 +11,12 @@ export const formatExpiryDate = (value: string): string => {
   }
   return digits;
 };
+
+export const formatPrice = (price: number, currency: string = "USD", locale: string = "en-US"): string => {
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(price);
+};

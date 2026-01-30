@@ -3,9 +3,9 @@ export interface Product {
   name: string;
   description: string;
   price: number;
-  image: string;
-  category: string;
-  rating?: number;
+  imageUrl: string;
+  stock: number;
+  available: boolean;
 }
 
 export interface CartItem extends Product {

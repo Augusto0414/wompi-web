@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "../../../components/ui/Button";
+import { formatPrice } from "../../../helpers/formatters";
 import { useAppSelector } from "../../../store/hooks";
 import { selectCartItems, selectCartTotalPrice } from "../../cart/store/cartSlice";
 
@@ -19,15 +20,15 @@ export const OrderSummarySection: React.FC<OrderSummarySectionProps> = ({ onPlac
         {items.map((item) => (
           <li key={item.id} className="flex gap-4">
             <div className="h-16 w-16 rounded-md overflow-hidden border border-gray-200 bg-white shrink-0">
-              <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
+              <img src={item.imageUrl} alt={item.name} className="h-full w-full object-cover" />
             </div>
             <div className="flex-1">
               <div className="flex justify-between items-start">
                 <span className="font-medium text-sm text-gray-900 line-clamp-2">{item.name}</span>
-                <span className="font-bold text-sm text-gray-900 ml-2">${(item.price * item.quantity).toFixed(2)}</span>
+                <span className="font-bold text-sm text-gray-900 ml-2">{formatPrice(item.price * item.quantity)}</span>
               </div>
               <div className="text-xs text-gray-500 mt-1">
-                Qty: {item.quantity} × ${item.price}
+                Qty: {item.quantity} × {formatPrice(item.price)}
               </div>
             </div>
           </li>
@@ -37,7 +38,7 @@ export const OrderSummarySection: React.FC<OrderSummarySectionProps> = ({ onPlac
       <div className="border-t border-gray-200 pt-6 space-y-3">
         <div className="flex justify-between text-sm text-gray-600">
           <span>Subtotal</span>
-          <span>${totalPrice.toFixed(2)}</span>
+          <span>{formatPrice(totalPrice)}</span>
         </div>
         <div className="flex justify-between text-sm text-gray-600">
           <span>Shipping</span>
@@ -45,7 +46,7 @@ export const OrderSummarySection: React.FC<OrderSummarySectionProps> = ({ onPlac
         </div>
         <div className="flex justify-between text-base font-bold text-gray-900 pt-2 border-t border-gray-200 mt-2">
           <span>Total</span>
-          <span className="text-xl">${totalPrice.toFixed(2)}</span>
+          <span className="text-xl">{formatPrice(totalPrice)}</span>
         </div>
       </div>
 
@@ -55,7 +56,7 @@ export const OrderSummarySection: React.FC<OrderSummarySectionProps> = ({ onPlac
         onClick={onPlaceOrder}
         disabled={isLoading}
       >
-        {isLoading ? "Processing Order..." : `Pay $${totalPrice.toFixed(2)}`}
+        {isLoading ? "Processing Order..." : `Pay ${formatPrice(totalPrice)}`}
       </Button>
 
       <p className="text-xs text-center text-gray-400 mt-4">Secure Checkout powered by Wompi.</p>
