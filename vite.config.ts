@@ -8,5 +8,17 @@ export default defineConfig({
   preview: {
     host: "0.0.0.0",
     port: process.env.PORT ? parseInt(process.env.PORT, 10) : 4173,
-  }
+  },
+  build: {
+    outDir: "dist",
+    assetsDir: "assets",
+    rollupOptions: {
+      output: {
+        assetFileNames: "assets/[name]-[hash][extname]",
+        chunkFileNames: "assets/[name]-[hash].js",
+        entryFileNames: "assets/[name]-[hash].js",
+      },
+    },
+  },
+  publicDir: "public",
 });
