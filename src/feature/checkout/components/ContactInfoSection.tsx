@@ -48,44 +48,14 @@ export const ContactInfoSection: React.FC<ContactInfoSectionProps> = ({ formData
             <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Phone Number</label>
             <input
               type="tel"
-              placeholder="+57 300 123 4567"
-              value={formData.phoneNumber}
-              onChange={(e) => updateField("phoneNumber", e.target.value)}
+              placeholder="3001234567"
+              value={formData.phone}
+              onChange={(e) => updateField("phone", e.target.value)}
               className={`w-full p-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none ${
-                errors.phoneNumber ? "border-red-500" : "border-gray-200"
+                errors.phone ? "border-red-500" : "border-gray-200"
               }`}
             />
-            {errors.phoneNumber && <p className="text-red-500 text-xs">{errors.phoneNumber}</p>}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">ID Type</label>
-            <select
-              value={formData.legalIdType}
-              onChange={(e) => updateField("legalIdType", e.target.value)}
-              className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
-            >
-              <option value="CC">Cédula de Ciudadanía</option>
-              <option value="CE">Cédula de Extranjería</option>
-              <option value="NIT">NIT</option>
-              <option value="PP">Pasaporte</option>
-            </select>
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">ID Number</label>
-            <input
-              type="text"
-              placeholder="1234567890"
-              value={formData.legalId}
-              onChange={(e) => updateField("legalId", e.target.value)}
-              className={`w-full p-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none ${
-                errors.legalId ? "border-red-500" : "border-gray-200"
-              }`}
-            />
-            {errors.legalId && <p className="text-red-500 text-xs">{errors.legalId}</p>}
+            {errors.phone && <p className="text-red-500 text-xs">{errors.phone}</p>}
           </div>
         </div>
       </div>

@@ -16,30 +16,17 @@ export const ShippingAddressSection: React.FC<ShippingAddressSectionProps> = ({ 
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="md:col-span-2 space-y-2">
-          <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Address Line 1</label>
+          <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Address</label>
           <input
             type="text"
-            placeholder="Street address"
-            value={formData.addressLine1}
-            onChange={(e) => updateField("addressLine1", e.target.value)}
+            placeholder="Calle 123 #45-67"
+            value={formData.address}
+            onChange={(e) => updateField("address", e.target.value)}
             className={`w-full p-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none ${
-              errors.addressLine1 ? "border-red-500" : "border-gray-200"
+              errors.address ? "border-red-500" : "border-gray-200"
             }`}
           />
-          {errors.addressLine1 && <p className="text-red-500 text-xs">{errors.addressLine1}</p>}
-        </div>
-
-        <div className="md:col-span-2 space-y-2">
-          <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-            Address Line 2 (Optional)
-          </label>
-          <input
-            type="text"
-            placeholder="Apartment, suite, unit, etc."
-            value={formData.addressLine2 || ""}
-            onChange={(e) => updateField("addressLine2", e.target.value)}
-            className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
-          />
+          {errors.address && <p className="text-red-500 text-xs">{errors.address}</p>}
         </div>
 
         <div className="space-y-2">
@@ -57,26 +44,40 @@ export const ShippingAddressSection: React.FC<ShippingAddressSectionProps> = ({ 
         </div>
 
         <div className="space-y-2">
-          <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Region / Department</label>
+          <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Department</label>
           <input
             type="text"
             placeholder="Cundinamarca"
-            value={formData.region}
-            onChange={(e) => updateField("region", e.target.value)}
+            value={formData.department}
+            onChange={(e) => updateField("department", e.target.value)}
             className={`w-full p-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none ${
-              errors.region ? "border-red-500" : "border-gray-200"
+              errors.department ? "border-red-500" : "border-gray-200"
             }`}
           />
-          {errors.region && <p className="text-red-500 text-xs">{errors.region}</p>}
+          {errors.department && <p className="text-red-500 text-xs">{errors.department}</p>}
         </div>
 
         <div className="space-y-2">
-          <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Postal Code (Optional)</label>
+          <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Zip Code</label>
           <input
             type="text"
             placeholder="110111"
-            value={formData.postalCode || ""}
-            onChange={(e) => updateField("postalCode", e.target.value)}
+            value={formData.zipCode}
+            onChange={(e) => updateField("zipCode", e.target.value)}
+            className={`w-full p-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none ${
+              errors.zipCode ? "border-red-500" : "border-gray-200"
+            }`}
+          />
+          {errors.zipCode && <p className="text-red-500 text-xs">{errors.zipCode}</p>}
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Instructions (Optional)</label>
+          <input
+            type="text"
+            placeholder="Leave at reception"
+            value={formData.instructions || ""}
+            onChange={(e) => updateField("instructions", e.target.value)}
             className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
           />
         </div>

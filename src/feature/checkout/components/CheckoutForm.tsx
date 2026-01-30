@@ -4,18 +4,33 @@ import { Button } from "../../../components/ui/Button";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { clearCart, selectCartItems } from "../../cart/store/cartSlice";
 import { useCheckoutForm } from "../hooks/useCheckoutForm";
-import { usePayment } from "../hooks/usePayment";
+import { usePayment, type PaymentStep } from "../hooks/usePayment";
 import { ContactInfoSection } from "./ContactInfoSection";
 import { OrderSummarySection } from "./OrderSummarySection";
 import { PaymentInfoSection } from "./PaymentInfoSection";
+import { PaymentReceipt } from "./PaymentReceipt";
 import { ShippingAddressSection } from "./ShippingAddressSection";
+
+const getStepLabel = (step: PaymentStep): string => {
+  const labels: Record<PaymentStep, string> = {
+    idle: "",
+    "getting-token": "Getting authorization...",
+    "tokenizing-card": "Securing card data...",
+    "creating-customer": "Creating customer profile...",
+    "creating-transaction": "Creating transaction...",
+    "creating-delivery": "Saving delivery info...",
+    "processing-payment": "Processing payment...",
+    completed: "Payment completed!",
+  };
+  return labels[step];
+};
 
 export const CheckoutForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const items = useAppSelector(selectCartItems);
   const { formData, errors, updateField, validateForm, resetForm } = useCheckoutForm();
-  const { status, error, processPayment, reset: resetPayment } = usePayment();
+  const { status, step, error, transaction, processPayment, reset: resetPayment } = usePayment();
 
   const isLoading = status === "processing";
 
@@ -28,24 +43,34 @@ export const CheckoutForm: React.FC = () => {
     );
   }
 
-  const handlePlaceOrder = async (e: React.MouseEvent) => {
+    const handlePlaceOrder = async (e: React.MouseEvent) => {
     e.preventDefault();
 
-    // Validate form
+
     if (!validateForm()) {
       return;
     }
 
-    // Process payment
-    const success = await processPayment(formData, items);
 
-    if (success) {
-      dispatch(clearCart());
-      resetForm();
-      alert("🎉 Payment Successful! Your order has been placed.");
-      navigate("/");
-    }
+    await processPayment(formData, items);
   };
+
+  const handleReceiptFinished = () => {
+    dispatch(clearCart());
+    resetForm();
+    resetPayment();
+    navigate("/");
+  };
+
+  if (status === "success") {
+    return (
+      <PaymentReceipt 
+        transaction={transaction}
+        items={items}
+        onFinished={handleReceiptFinished}
+      />
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -54,7 +79,17 @@ export const CheckoutForm: React.FC = () => {
         <ShippingAddressSection formData={formData} errors={errors} updateField={updateField} />
         <PaymentInfoSection formData={formData} errors={errors} updateField={updateField} />
 
-        {/* Error message */}
+
+        {isLoading && step !== "idle" && (
+          <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+            <div className="flex items-center gap-3">
+              <div className="h-5 w-5 animate-spin rounded-full border-2 border-indigo-300 border-t-indigo-600"></div>
+              <p className="text-indigo-700 font-medium">{getStepLabel(step)}</p>
+            </div>
+          </div>
+        )}
+
+
         {status === "error" && error && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-4">
             <div className="flex items-center gap-2">
