@@ -1,73 +1,161 @@
-# React + TypeScript + Vite
+# WOMPI Web - E-commerce Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Una moderna plataforma de e-commerce construida con React, TypeScript, Redux Toolkit y Tailwind CSS, integrada con la pasarela de pagos Wompi.
 
-Currently, two official plugins are available:
+## 🚀 Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Catálogo de productos** con sistema de búsqueda
+- **Carrito de compras** interactivo con gestión de estado
+- **Proceso de checkout** completo con formularios validados
+- **Integración con Wompi** para pagos seguros
+- **Generación de recibos en PDF** automática
+- **Diseño responsive** con Tailwind CSS
+- **Gestión de estado** con Redux Toolkit
+- **TypeScript** para mayor seguridad de tipos
 
-## React Compiler
+## 📱 Capturas de Pantalla
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Página Principal
 
-## Expanding the ESLint configuration
+![Página Principal](docs/images/homepage.png)
+_Catálogo de productos con opciones de búsqueda y navegación_
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Carrito de Compras
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+![Carrito de Compras](docs/images/shopping-cart.png)
+_Carrito lateral con productos añadidos y opciones de cantidad_
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Proceso de Checkout
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+![Checkout](docs/images/checkout.png)
+_Formulario de checkout con información de contacto, envío y resumen del pedido_
+
+### Confirmación de Pago
+
+![Pago Exitoso](docs/images/payment-success.png)
+_Confirmación de pago exitoso con detalles de la transacción y opción de descarga de recibo_
+
+## 🛠️ Tecnologías Utilizadas
+
+- **Frontend**: React 19.2.0, TypeScript
+- **Estilado**: Tailwind CSS 4.1.18
+- **Estado**: Redux Toolkit, React-Redux
+- **Enrutamiento**: React Router DOM
+- **Construcción**: Vite 7.2.4
+- **Pagos**: Wompi API
+- **PDF**: jsPDF, html2canvas
+- **HTTP Client**: Axios
+
+## 🚀 Instalación y Configuración
+
+### Prerequisitos
+
+- Node.js (versión 18 o superior)
+- npm o yarn
+
+### Instalación
+
+1. **Clonar el repositorio**
+
+   ```bash
+   git clone https://github.com/Augusto0414/wompi-web.git
+   cd wompi-web
+   ```
+
+2. **Instalar dependencias**
+
+   ```bash
+   npm install
+   ```
+
+3. **Configurar variables de entorno**
+
+   ```bash
+   # Crear archivo .env.local
+   VITE_WOMPI_PUBLIC_KEY=your_wompi_public_key
+   VITE_WOMPI_PRIVATE_KEY=your_wompi_private_key
+   ```
+
+4. **Ejecutar en modo desarrollo**
+
+   ```bash
+   npm run dev
+   ```
+
+5. **Construir para producción**
+
+   ```bash
+   npm run build
+   ```
+
+6. **Previsualizar build de producción**
+   ```bash
+   npm run preview
+   ```
+
+## 📂 Estructura del Proyecto
+
+```
+src/
+├── api/                    # Configuración de API
+│   └── wompi.ts           # Cliente para API de Wompi
+├── components/            # Componentes reutilizables
+│   ├── layout/           # Componentes de layout
+│   └── ui/               # Componentes de UI
+├── feature/              # Funcionalidades por módulo
+│   ├── cart/             # Gestión de carrito
+│   ├── catalog/          # Catálogo de productos
+│   └── checkout/         # Proceso de pago
+├── helpers/              # Funciones de utilidad
+├── store/                # Configuración de Redux
+└── types/                # Definiciones de TypeScript
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🔧 Scripts Disponibles
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- `npm run dev` - Ejecuta el servidor de desarrollo
+- `npm run build` - Construye la aplicación para producción
+- `npm run preview` - Previsualiza el build de producción
+- `npm run lint` - Ejecuta ESLint para revisar código
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 💳 Datos de Prueba
+
+Para probar el proceso de pago, utiliza los siguientes datos de tarjeta de crédito de prueba:
+
 ```
+Card Number: 4242 4242 4242 4242
+Cardholder Name: JOHN DOE
+Expiry Date: 12/26
+CVC: 123
+```
+
+> **Nota**: Estos son datos de prueba proporcionados por Wompi para testing. No uses datos reales de tarjetas de crédito en el entorno de desarrollo.
+
+## 🌐 Deploy
+
+La aplicación está configurada para ser desplegada en Render.com con el archivo `_redirects` para manejo de rutas SPA.
+
+### Deploy automático
+
+El proyecto se despliega automáticamente en cada push a la rama principal.
+
+## 🤝 Contribuir
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/nueva-caracteristica`)
+3. Commit tus cambios (`git commit -m 'Agrega nueva característica'`)
+4. Push a la rama (`git push origin feature/nueva-caracteristica`)
+5. Abre un Pull Request
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+
+## 📧 Contacto
+
+- **Desarrollador**: Augusto0414
+- **Repositorio**: [https://github.com/Augusto0414/wompi-web](https://github.com/Augusto0414/wompi-web)
+
+---
+
+Hecho con ❤️ usando React + TypeScript + Vite
