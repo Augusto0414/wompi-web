@@ -4,19 +4,16 @@ import type { CheckoutFormData } from "../../../types";
 const initialFormData: CheckoutFormData = {
   email: "",
   fullName: "",
-  legalIdType: "CC",
-  legalId: "",
-  phoneNumber: "",
-  addressLine1: "",
-  addressLine2: "",
+  phone: "",
+  address: "",
   city: "",
-  region: "",
-  postalCode: "",
+  department: "",
+  zipCode: "",
+  instructions: "",
   cardNumber: "",
   cardHolder: "",
   expiryDate: "",
   cvc: "",
-  installments: 1,
 };
 
 export const useCheckoutForm = () => {
@@ -45,36 +42,36 @@ export const useCheckoutForm = () => {
     if (!formData.fullName) {
       newErrors.fullName = "Full name is required";
     }
-    if (!formData.legalId) {
-      newErrors.legalId = "ID number is required";
-    }
-    if (!formData.phoneNumber) {
-      newErrors.phoneNumber = "Phone number is required";
+    if (!formData.phone || formData.phone.length < 7) {
+      newErrors.phone = "Phone number is required (min 7 characters)";
     }
 
     // Address validation
-    if (!formData.addressLine1) {
-      newErrors.addressLine1 = "Address is required";
+    if (!formData.address || formData.address.length < 5) {
+      newErrors.address = "Address is required (min 5 characters)";
     }
     if (!formData.city) {
       newErrors.city = "City is required";
     }
-    if (!formData.region) {
-      newErrors.region = "Region is required";
+    if (!formData.department) {
+      newErrors.department = "Department is required";
+    }
+    if (!formData.zipCode || formData.zipCode.length < 4) {
+      newErrors.zipCode = "Zip code is required (min 4 characters)";
     }
 
     // Payment validation
-    if (!formData.cardNumber || formData.cardNumber.replace(/\s/g, "").length < 16) {
-      newErrors.cardNumber = "Valid card number is required";
+    if (!formData.cardNumber || formData.cardNumber.replace(/\s/g, "").length < 13) {
+      newErrors.cardNumber = "Valid card number is required (13-19 digits)";
     }
-    if (!formData.cardHolder) {
+    if (!formData.cardHolder || formData.cardHolder.length < 2) {
       newErrors.cardHolder = "Cardholder name is required";
     }
     if (!formData.expiryDate || formData.expiryDate.length < 7) {
       newErrors.expiryDate = "Valid expiry date is required";
     }
     if (!formData.cvc || formData.cvc.length < 3) {
-      newErrors.cvc = "Valid CVC is required";
+      newErrors.cvc = "Valid CVC is required (3-4 digits)";
     }
 
     setErrors(newErrors);

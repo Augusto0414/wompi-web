@@ -80,7 +80,7 @@ export const PaymentInfoSection: React.FC<PaymentInfoSectionProps> = ({ formData
             {errors.cardHolder && <p className="text-red-500 text-xs">{errors.cardHolder}</p>}
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Expiry Date</label>
               <input
@@ -125,20 +125,6 @@ export const PaymentInfoSection: React.FC<PaymentInfoSectionProps> = ({ formData
                 </svg>
               </div>
               {errors.cvc && <p className="text-red-500 text-xs">{errors.cvc}</p>}
-            </div>
-            <div className="space-y-2">
-              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Installments</label>
-              <select
-                value={formData.installments}
-                onChange={(e) => updateField("installments", Number(e.target.value))}
-                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
-              >
-                {[1, 2, 3, 6, 12, 24, 36].map((num) => (
-                  <option key={num} value={num}>
-                    {num} {num === 1 ? "quota" : "quotas"}
-                  </option>
-                ))}
-              </select>
             </div>
           </div>
         </div>

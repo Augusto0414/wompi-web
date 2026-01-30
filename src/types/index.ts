@@ -26,56 +26,55 @@ export interface Address {
   country: string;
 }
 
-// Customer types
+
 export interface Customer {
   id: string;
   email: string;
   fullName: string;
-  legalIdType: string;
-  legalId: string;
-  phoneNumber: string;
+  phone: string;
+  createdAt: string;
 }
 
 export interface CreateCustomerDto {
   email: string;
   fullName: string;
-  legalIdType: string;
-  legalId: string;
-  phoneNumber: string;
+  phone: string;
 }
 
-// Delivery types
+
 export interface Delivery {
   id: string;
   transactionId: string;
-  addressLine1: string;
-  addressLine2?: string;
+  customerId: string;
+  address: string;
   city: string;
-  region: string;
-  country: string;
-  postalCode?: string;
-  phoneNumber: string;
+  department: string;
+  zipCode: string;
+  instructions?: string;
+  status: string;
+  createdAt: string;
 }
 
 export interface CreateDeliveryDto {
   transactionId: string;
-  addressLine1: string;
-  addressLine2?: string;
+  customerId: string;
+  address: string;
   city: string;
-  region: string;
-  country: string;
-  postalCode?: string;
-  phoneNumber: string;
+  department: string;
+  zipCode: string;
+  instructions?: string;
 }
 
-// Transaction types
+
 export type TransactionStatus = "PENDING" | "APPROVED" | "DECLINED" | "ERROR";
 
 export interface Transaction {
   id: string;
   productId: string;
-  customerId: string;
-  quantity: number;
+  customerId?: string;
+  productPrice: number;
+  baseCharge: number;
+  shippingCost: number;
   totalAmount: number;
   status: TransactionStatus;
   wompiTransactionId?: string;
@@ -85,19 +84,17 @@ export interface Transaction {
 
 export interface CreateTransactionDto {
   productId: string;
-  customerId: string;
-  quantity: number;
+  customerId?: string;
+  shippingCost?: number;
 }
 
-// Payment types
+
 export interface PayTransactionDto {
   cardToken: string;
-  acceptanceToken: string;
-  installments: number;
 }
 
 export interface TokenizeCardDto {
-  number: string;
+  cardNumber: string;
   expMonth: string;
   expYear: string;
   cvc: string;
@@ -105,37 +102,40 @@ export interface TokenizeCardDto {
 }
 
 export interface AcceptanceTokenResponse {
-  acceptanceToken: string;
-  permalink: string;
-}
-
-export interface TokenizeCardResponse {
-  id: string;
-  status: string;
+  success: boolean;
   data: {
-    id: string;
+    acceptanceToken: string;
+    permalink: string;
+    type: string;
   };
 }
 
-// Checkout form data
+export interface TokenizeCardResponse {
+  success: boolean;
+  data: {
+    tokenId: string;
+    brand: string;
+    lastFour: string;
+    expiresAt: string;
+  };
+}
+
+
 export interface CheckoutFormData {
-  // Contact info
+
   email: string;
-  // Customer info
+
   fullName: string;
-  legalIdType: string;
-  legalId: string;
-  phoneNumber: string;
-  // Shipping address
-  addressLine1: string;
-  addressLine2?: string;
+  phone: string;
+
+  address: string;
   city: string;
-  region: string;
-  postalCode?: string;
-  // Payment info
+  department: string;
+  zipCode: string;
+  instructions?: string;
+
   cardNumber: string;
   cardHolder: string;
   expiryDate: string;
   cvc: string;
-  installments: number;
 }
