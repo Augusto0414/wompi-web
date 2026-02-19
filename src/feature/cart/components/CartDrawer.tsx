@@ -6,7 +6,9 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import {
   removeFromCart,
   selectCartItems,
+  selectCartSubtotal,
   selectCartTotalPrice,
+  selectCartVatAmount,
   selectIsCartOpen,
   toggleCart,
   updateQuantity,
@@ -17,7 +19,10 @@ export const CartDrawer: React.FC = () => {
   const navigate = useNavigate();
   const isOpen = useAppSelector(selectIsCartOpen);
   const items = useAppSelector(selectCartItems);
+  const subtotal = useAppSelector(selectCartSubtotal);
+  const vatAmount = useAppSelector(selectCartVatAmount);
   const totalPrice = useAppSelector(selectCartTotalPrice);
+
   const drawerRef = useRef<HTMLDivElement>(null);
 
   // Close on click outside
@@ -147,11 +152,22 @@ export const CartDrawer: React.FC = () => {
 
           {items.length > 0 && (
             <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-              <div className="flex justify-between text-base font-medium text-gray-900">
-                <p>Subtotal</p>
-                <p>{formatPrice(totalPrice)}</p>
+              <div className="space-y-2 mb-4">
+                <div className="flex justify-between text-sm text-gray-600">
+                  <p>Subtotal productos</p>
+                  <p>{formatPrice(subtotal)}</p>
+                </div>
+                <div className="flex justify-between text-sm text-gray-600">
+                  <p>IVA (19%)</p>
+                  <p>{formatPrice(vatAmount)}</p>
+                </div>
+                <div className="flex justify-between text-base font-medium text-gray-900 pt-2 border-t border-gray-200">
+                  <p>Total</p>
+                  <p>{formatPrice(totalPrice)}</p>
+                </div>
               </div>
-              <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+              <p className="text-sm text-gray-500">¡Envío gratuito incluido!</p>
+
               <div className="mt-6">
                 <Button
                   className="w-full"

@@ -43,14 +43,12 @@ export const CheckoutForm: React.FC = () => {
     );
   }
 
-    const handlePlaceOrder = async (e: React.MouseEvent) => {
+  const handlePlaceOrder = async (e: React.MouseEvent) => {
     e.preventDefault();
-
 
     if (!validateForm()) {
       return;
     }
-
 
     await processPayment(formData, items);
   };
@@ -63,13 +61,7 @@ export const CheckoutForm: React.FC = () => {
   };
 
   if (status === "success") {
-    return (
-      <PaymentReceipt 
-        transaction={transaction}
-        items={items}
-        onFinished={handleReceiptFinished}
-      />
-    );
+    return <PaymentReceipt transaction={transaction} items={items} onFinished={handleReceiptFinished} />;
   }
 
   return (
@@ -79,7 +71,7 @@ export const CheckoutForm: React.FC = () => {
         <ShippingAddressSection formData={formData} errors={errors} updateField={updateField} />
         <PaymentInfoSection formData={formData} errors={errors} updateField={updateField} />
 
-
+        {/* Processing payment indicator */}
         {isLoading && step !== "idle" && (
           <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
             <div className="flex items-center gap-3">
@@ -89,7 +81,7 @@ export const CheckoutForm: React.FC = () => {
           </div>
         )}
 
-
+        {/* Payment error */}
         {status === "error" && error && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-4">
             <div className="flex items-center gap-2">
@@ -112,7 +104,7 @@ export const CheckoutForm: React.FC = () => {
       </div>
 
       <div className="lg:col-span-5">
-        <OrderSummarySection onPlaceOrder={handlePlaceOrder} isLoading={isLoading} />
+        <OrderSummarySection onPlaceOrder={handlePlaceOrder} isLoading={isLoading} transaction={transaction} />
       </div>
     </div>
   );

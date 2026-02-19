@@ -1,10 +1,12 @@
-import type { PayloadAction } from '@reduxjs/toolkit';
-import { createSlice } from '@reduxjs/toolkit';
-import type { CartItem, Product } from '../../../types';
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import type { CartItem, Product } from "../../../types";
 
 interface CartState {
   items: CartItem[];
   totalQuantity: number;
+  subtotal: number;
+  vatAmount: number;
   totalPrice: number;
   isOpen: boolean;
 }
@@ -12,31 +14,37 @@ interface CartState {
 const initialState: CartState = {
   items: [],
   totalQuantity: 0,
+  subtotal: 0,
+  vatAmount: 0,
   totalPrice: 0,
   isOpen: false,
 };
 
-// Helper: Pure function to calculate totals
+// Helper: Pure function to calculate cart totals
 const recalculateCartTotals = (items: CartItem[]) => {
   const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
-  const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  return { totalQuantity, totalPrice };
+  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const vatAmount = subtotal * 0.19; // 19% IVA
+  const totalPrice = subtotal + vatAmount;
+  return { totalQuantity, subtotal, vatAmount, totalPrice };
 };
 
 // Helper: Mutates state to update totals
 const updateTotals = (state: CartState) => {
-  const { totalQuantity, totalPrice } = recalculateCartTotals(state.items);
+  const { totalQuantity, subtotal, vatAmount, totalPrice } = recalculateCartTotals(state.items);
   state.totalQuantity = totalQuantity;
+  state.subtotal = subtotal;
+  state.vatAmount = vatAmount;
   state.totalPrice = totalPrice;
 };
 
 const cartSlice = createSlice({
-  name: 'cart',
+  name: "cart",
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<Product>) => {
       const productToAdd = action.payload;
-      const existingItem = state.items.find(item => item.id === productToAdd.id);
+      const existingItem = state.items.find((item) => item.id === productToAdd.id);
 
       if (existingItem) {
         existingItem.quantity += 1;
@@ -50,20 +58,20 @@ const cartSlice = createSlice({
 
     removeFromCart: (state, action: PayloadAction<string>) => {
       const productIdToRemove = action.payload;
-      state.items = state.items.filter(item => item.id !== productIdToRemove);
+      state.items = state.items.filter((item) => item.id !== productIdToRemove);
       updateTotals(state);
     },
 
     updateQuantity: (state, action: PayloadAction<{ id: string; quantity: number }>) => {
       const { id, quantity } = action.payload;
-      const targetItem = state.items.find(item => item.id === id);
+      const targetItem = state.items.find((item) => item.id === id);
 
       // Guard Clause: Item must exist
       if (!targetItem) return;
 
       // Guard Clause: Remove item if quantity is zero or less
       if (quantity <= 0) {
-        state.items = state.items.filter(item => item.id !== id);
+        state.items = state.items.filter((item) => item.id !== id);
         updateTotals(state);
         return;
       }
@@ -80,7 +88,7 @@ const cartSlice = createSlice({
     clearCart: (state) => {
       state.items = [];
       updateTotals(state);
-    }
+    },
   },
 });
 
@@ -91,5 +99,7 @@ export default cartSlice.reducer;
 // Selectors
 export const selectCartItems = (state: { cart: CartState }) => state.cart.items;
 export const selectCartTotalQuantity = (state: { cart: CartState }) => state.cart.totalQuantity;
+export const selectCartSubtotal = (state: { cart: CartState }) => state.cart.subtotal;
+export const selectCartVatAmount = (state: { cart: CartState }) => state.cart.vatAmount;
 export const selectCartTotalPrice = (state: { cart: CartState }) => state.cart.totalPrice;
 export const selectIsCartOpen = (state: { cart: CartState }) => state.cart.isOpen;

@@ -26,7 +26,6 @@ export interface Address {
   country: string;
 }
 
-
 export interface Customer {
   id: string;
   email: string;
@@ -40,7 +39,6 @@ export interface CreateCustomerDto {
   fullName: string;
   phone: string;
 }
-
 
 export interface Delivery {
   id: string;
@@ -65,7 +63,6 @@ export interface CreateDeliveryDto {
   instructions?: string;
 }
 
-
 export type TransactionStatus = "PENDING" | "APPROVED" | "DECLINED" | "ERROR";
 
 export interface Transaction {
@@ -73,6 +70,7 @@ export interface Transaction {
   productId: string;
   customerId?: string;
   productPrice: number;
+  vatAmount: number;
   baseCharge: number;
   shippingCost: number;
   totalAmount: number;
@@ -87,7 +85,6 @@ export interface CreateTransactionDto {
   customerId?: string;
   shippingCost?: number;
 }
-
 
 export interface PayTransactionDto {
   cardToken: string;
@@ -120,9 +117,7 @@ export interface TokenizeCardResponse {
   };
 }
 
-
 export interface CheckoutFormData {
-
   email: string;
 
   fullName: string;
